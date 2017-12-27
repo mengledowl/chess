@@ -40,40 +40,42 @@ class ChessMovesFinder
       potential_move = move_right_from(potential_move)
     end
 
-    # move diagonally up and left
-    potential_move = move_up_from(position)
-    potential_move = move_left_from(potential_move)
-    while chess_board.include?(potential_move)
-      moves << potential_move
-      potential_move = move_up_from(potential_move)
+    if chess_piece == 'queen'
+      # move diagonally up and left
+      potential_move = move_up_from(position)
       potential_move = move_left_from(potential_move)
-    end
+      while chess_board.include?(potential_move)
+        moves << potential_move
+        potential_move = move_up_from(potential_move)
+        potential_move = move_left_from(potential_move)
+      end
 
-    # move diagonally down and left
-    potential_move = move_down_from(position)
-    potential_move = move_left_from(potential_move)
-    while chess_board.include?(potential_move)
-      moves << potential_move
-      potential_move = move_down_from(potential_move)
+      # move diagonally down and left
+      potential_move = move_down_from(position)
       potential_move = move_left_from(potential_move)
-    end
+      while chess_board.include?(potential_move)
+        moves << potential_move
+        potential_move = move_down_from(potential_move)
+        potential_move = move_left_from(potential_move)
+      end
 
-    # move diagonally up and right
-    potential_move = move_up_from(position)
-    potential_move = move_right_from(potential_move)
-    while chess_board.include?(potential_move)
-      moves << potential_move
-      potential_move = move_up_from(potential_move)
+      # move diagonally up and right
+      potential_move = move_up_from(position)
       potential_move = move_right_from(potential_move)
-    end
+      while chess_board.include?(potential_move)
+        moves << potential_move
+        potential_move = move_up_from(potential_move)
+        potential_move = move_right_from(potential_move)
+      end
 
-    # move diagonally down and right
-    potential_move = move_down_from(position)
-    potential_move = move_right_from(potential_move)
-    while chess_board.include?(potential_move)
-      moves << potential_move
-      potential_move = move_down_from(potential_move)
+      # move diagonally down and right
+      potential_move = move_down_from(position)
       potential_move = move_right_from(potential_move)
+      while chess_board.include?(potential_move)
+        moves << potential_move
+        potential_move = move_down_from(potential_move)
+        potential_move = move_right_from(potential_move)
+      end
     end
 
     moves.map(&:join)
