@@ -12,6 +12,42 @@ class ChessMovesFinder
   def retrieve_available_moves
     moves = []
 
+    if chess_piece == 'knight'
+      potential_move = move_up_from(position, spaces: 2)
+      potential_move = move_right_from(potential_move)
+      moves << potential_move if chess_board.include?(potential_move)
+
+      potential_move = move_right_from(position, spaces: 2)
+      potential_move = move_down_from(potential_move)
+      moves << potential_move if chess_board.include?(potential_move)
+
+      potential_move = move_down_from(position, spaces: 2)
+      potential_move = move_left_from(potential_move)
+      moves << potential_move if chess_board.include?(potential_move)
+
+      potential_move = move_left_from(position, spaces: 2)
+      potential_move = move_up_from(potential_move)
+      moves << potential_move if chess_board.include?(potential_move)
+
+      potential_move = move_up_from(position)
+      potential_move = move_right_from(potential_move, spaces: 2)
+      moves << potential_move if chess_board.include?(potential_move)
+
+      potential_move = move_right_from(position)
+      potential_move = move_down_from(potential_move, spaces: 2)
+      moves << potential_move if chess_board.include?(potential_move)
+
+      potential_move = move_down_from(position)
+      potential_move = move_left_from(potential_move, spaces: 2)
+      moves << potential_move if chess_board.include?(potential_move)
+
+      potential_move = move_left_from(position)
+      potential_move = move_up_from(potential_move, spaces: 2)
+      moves << potential_move if chess_board.include?(potential_move)
+
+      return moves.map(&:join)
+    end
+
     # move up
     potential_move = move_up_from(position)
     while chess_board.include?(potential_move)
@@ -82,20 +118,20 @@ class ChessMovesFinder
   end
 
   # maybe pull this into a class called "Positioner"?
-  def move_up_from(specified_position)
-    [specified_position.first, (specified_position[1].to_i + 1).to_s]
+  def move_up_from(specified_position, spaces: 1)
+    [specified_position.first, (specified_position[1].to_i + spaces).to_s]
   end
 
-  def move_down_from(specified_position)
-    [specified_position.first, (specified_position[1].to_i - 1).to_s]
+  def move_down_from(specified_position, spaces: 1)
+    [specified_position.first, (specified_position[1].to_i - spaces).to_s]
   end
 
-  def move_left_from(specified_position)
-    [(specified_position.first.ord - 1).chr, specified_position[1]]
+  def move_left_from(specified_position, spaces: 1)
+    [(specified_position.first.ord - spaces).chr, specified_position[1]]
   end
 
-  def move_right_from(specified_position)
-    [(specified_position.first.ord + 1).chr, specified_position[1]]
+  def move_right_from(specified_position, spaces: 1)
+    [(specified_position.first.ord + spaces).chr, specified_position[1]]
   end
 
   def position

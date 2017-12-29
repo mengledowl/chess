@@ -49,6 +49,28 @@ describe ChessMovesFinder do
         it { is_expected.to match_array %w(h1 h2 h3 h4 h6 h7 h8 a5 b5 c5 d5 e5 f5 g5) }
       end
     end
+
+    context 'when chess piece is a knight' do
+      let(:chess_piece) { 'knight' }
+
+      context 'when piece is at location d4' do
+        let(:position) { 'd4' }
+
+        it { is_expected.to match_array %w(e6 f5 f3 e2 c2 b3 b5 c6) }
+      end
+
+      context 'when piece is at location a1' do
+        let(:position) { 'a1' }
+
+        it { is_expected.to match_array %w(b3 c2) }
+      end
+
+      context 'when piece is at location h5' do
+        let(:position) { 'h5' }
+
+        it { is_expected.to match_array %w(g7 f6 f4 g3) }
+      end
+    end
   end
 
   describe 'position_from' do
