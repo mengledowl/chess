@@ -1,3 +1,5 @@
+require 'positioner'
+
 class ChessMovesFinder
   X_AXIS = ('a'..'h').to_a
   Y_AXIS = (1..8).to_a.map(&:to_s)
@@ -13,129 +15,63 @@ class ChessMovesFinder
     moves = []
 
     if chess_piece == 'knight'
-      potential_move = move_up_from(position, spaces: 2)
-      potential_move = move_right_from(potential_move)
-      moves << potential_move if chess_board.include?(potential_move)
+      potential_moves = [
+          positioner.move(up: 2, right: 1),
+          positioner.move(right: 2, down: 1),
+          positioner.move(down: 2, left: 1),
+          positioner.move(left: 2, up: 1),
+          positioner.move(up: 1, right: 2),
+          positioner.move(right: 1, down: 2),
+          positioner.move(down: 1, left: 2),
+          positioner.move(left: 1, up: 2)
+      ]
 
-      potential_move = move_right_from(position, spaces: 2)
-      potential_move = move_down_from(potential_move)
-      moves << potential_move if chess_board.include?(potential_move)
-
-      potential_move = move_down_from(position, spaces: 2)
-      potential_move = move_left_from(potential_move)
-      moves << potential_move if chess_board.include?(potential_move)
-
-      potential_move = move_left_from(position, spaces: 2)
-      potential_move = move_up_from(potential_move)
-      moves << potential_move if chess_board.include?(potential_move)
-
-      potential_move = move_up_from(position)
-      potential_move = move_right_from(potential_move, spaces: 2)
-      moves << potential_move if chess_board.include?(potential_move)
-
-      potential_move = move_right_from(position)
-      potential_move = move_down_from(potential_move, spaces: 2)
-      moves << potential_move if chess_board.include?(potential_move)
-
-      potential_move = move_down_from(position)
-      potential_move = move_left_from(potential_move, spaces: 2)
-      moves << potential_move if chess_board.include?(potential_move)
-
-      potential_move = move_left_from(position)
-      potential_move = move_up_from(potential_move, spaces: 2)
-      moves << potential_move if chess_board.include?(potential_move)
-
-      return moves.map(&:join)
+      return potential_moves.select { |move| chess_board.include?(move) }.map(&:join)
     end
 
-    # move up
-    potential_move = move_up_from(position)
-    while chess_board.include?(potential_move)
-      moves << potential_move
-      potential_move = move_up_from(potential_move)
-    end
+    # get vertical row
+    vertical_row = Y_AXIS.map { |y| [position.first, y] }
+    moves.concat(vertical_row.reject { |p| p == position })
 
-    # move down
-    potential_move = move_down_from(position)
-    while chess_board.include?(potential_move)
-      moves << potential_move
-      potential_move = move_down_from(potential_move)
-    end
-
-    # move left
-    potential_move = move_left_from(position)
-    while chess_board.include?(potential_move)
-      moves << potential_move
-      potential_move = move_left_from(potential_move)
-    end
-
-    # move right
-    potential_move = move_right_from(position)
-    while chess_board.include?(potential_move)
-      moves << potential_move
-      potential_move = move_right_from(potential_move)
-    end
+    # get horizontal row
+    horizontal_row = X_AXIS.map { |x| [x, position[1]] }
+    moves.concat(horizontal_row.reject { |p| p == position })
 
     if chess_piece == 'queen'
-      # move diagonally up and left
-      potential_move = move_up_from(position)
-      potential_move = move_left_from(potential_move)
+      potential_move = positioner.move(up: 1, left: 1)
       while chess_board.include?(potential_move)
         moves << potential_move
-        potential_move = move_up_from(potential_move)
-        potential_move = move_left_from(potential_move)
+        potential_move = Positioner.new(potential_move).move(up: 1, left: 1)
       end
 
-      # move diagonally down and left
-      potential_move = move_down_from(position)
-      potential_move = move_left_from(potential_move)
+      potential_move = positioner.move(down: 1, left: 1)
       while chess_board.include?(potential_move)
         moves << potential_move
-        potential_move = move_down_from(potential_move)
-        potential_move = move_left_from(potential_move)
+        potential_move = Positioner.new(potential_move).move(down: 1, left: 1)
       end
 
-      # move diagonally up and right
-      potential_move = move_up_from(position)
-      potential_move = move_right_from(potential_move)
+      potential_move = positioner.move(up: 1, right: 1)
       while chess_board.include?(potential_move)
         moves << potential_move
-        potential_move = move_up_from(potential_move)
-        potential_move = move_right_from(potential_move)
+        potential_move = Positioner.new(potential_move).move(up: 1, right: 1)
       end
 
-      # move diagonally down and right
-      potential_move = move_down_from(position)
-      potential_move = move_right_from(potential_move)
+      potential_move = positioner.move(down: 1, right: 1)
       while chess_board.include?(potential_move)
         moves << potential_move
-        potential_move = move_down_from(potential_move)
-        potential_move = move_right_from(potential_move)
+        potential_move = Positioner.new(potential_move).move(down: 1, right: 1)
       end
     end
 
     moves.map(&:join)
   end
 
-  # maybe pull this into a class called "Positioner"?
-  def move_up_from(specified_position, spaces: 1)
-    [specified_position.first, (specified_position[1].to_i + spaces).to_s]
-  end
-
-  def move_down_from(specified_position, spaces: 1)
-    [specified_position.first, (specified_position[1].to_i - spaces).to_s]
-  end
-
-  def move_left_from(specified_position, spaces: 1)
-    [(specified_position.first.ord - spaces).chr, specified_position[1]]
-  end
-
-  def move_right_from(specified_position, spaces: 1)
-    [(specified_position.first.ord + spaces).chr, specified_position[1]]
-  end
-
   def position
     chess_board.include?(raw_position.chars) ? raw_position.chars : nil
+  end
+
+  def positioner
+    @positioner ||= Positioner.new(position)
   end
 
   private
