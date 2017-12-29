@@ -16,7 +16,7 @@ class Positioner
 
   class Movement
     class << self
-      def up(position, spaces: spaces)
+      def up(position, spaces: 1)
         [position.first, (position[1].to_i + spaces).to_s]
       end
 

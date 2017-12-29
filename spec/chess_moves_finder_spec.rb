@@ -1,13 +1,16 @@
 require 'spec_helper'
 
 require_relative '../lib/chess_moves_finder'
+require_relative '../lib/pieces/knight'
+require_relative '../lib/pieces/queen'
+require_relative '../lib/pieces/rook'
 
 describe ChessMovesFinder do
   describe 'retrieve_available_moves' do
     subject { described_class.new(chess_piece, at: position).retrieve_available_moves }
 
     context 'when chess_piece is queen' do
-      let(:chess_piece) { 'queen' }
+      let(:chess_piece) { Queen }
 
       context 'when piece is at location d4' do
         let(:position) { 'd4' }
@@ -29,7 +32,7 @@ describe ChessMovesFinder do
     end
 
     context 'when chess_piece is a rook' do
-      let(:chess_piece) { 'rook' }
+      let(:chess_piece) { Rook }
 
       context 'when piece is at location d4' do
         let(:position) { 'd4' }
@@ -51,7 +54,7 @@ describe ChessMovesFinder do
     end
 
     context 'when chess piece is a knight' do
-      let(:chess_piece) { 'knight' }
+      let(:chess_piece) { Knight }
 
       context 'when piece is at location d4' do
         let(:position) { 'd4' }
