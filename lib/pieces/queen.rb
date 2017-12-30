@@ -2,32 +2,26 @@ require_relative '../piece'
 
 class Queen < Piece
   def potential_moves
-    moves = []
+    moves = [
+        recursive_move(positioner, up: 1, left: 1),
+        recursive_move(positioner, down: 1, left: 1),
+        recursive_move(positioner, up: 1, right: 1),
+        recursive_move(positioner, down: 1, right: 1),
+        horizontal_moves,
+        vertical_moves
+    ]
 
-    potential_move = positioner.move(up: 1, left: 1)
-    while chess_board.position_exists?(potential_move)
-      moves << potential_move
-      potential_move = Positioner.new(potential_move).move(up: 1, left: 1)
-    end
+    moves.reduce([], :concat)
+  end
 
-    potential_move = positioner.move(down: 1, left: 1)
-    while chess_board.position_exists?(potential_move)
-      moves << potential_move
-      potential_move = Positioner.new(potential_move).move(down: 1, left: 1)
-    end
+  private
 
-    potential_move = positioner.move(up: 1, right: 1)
-    while chess_board.position_exists?(potential_move)
-      moves << potential_move
-      potential_move = Positioner.new(potential_move).move(up: 1, right: 1)
-    end
+  # returns an array of positions going from the position passed in, to the edge of the board in the direction(s) specified
+  def recursive_move(movement_positioner, moves: [], **kwargs)
+    potential_move = movement_positioner.move(kwargs)
 
-    potential_move = positioner.move(down: 1, right: 1)
-    while chess_board.position_exists?(potential_move)
-      moves << potential_move
-      potential_move = Positioner.new(potential_move).move(down: 1, right: 1)
-    end
+    return moves unless chess_board.position_exists?(potential_move)
 
-    moves.concat(horizontal_moves).concat(vertical_moves)
+    recursive_move(Positioner.new(potential_move), moves: moves.push(potential_move), **kwargs)
   end
 end
