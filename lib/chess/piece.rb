@@ -1,5 +1,5 @@
-require_relative './positioner'
-require_relative './chess_board'
+require_relative 'positioner'
+require_relative 'chess_board'
 
 class Piece
   attr_accessor :position

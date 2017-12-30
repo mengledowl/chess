@@ -1,4 +1,4 @@
-require_relative './chess_board'
+require_relative 'chess_board'
 require_relative 'pieces/knight'
 require_relative 'pieces/queen'
 require_relative 'pieces/rook'
