@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-require_relative '../lib/positioner'
+require_relative '../lib/chess/positioner'
 
 describe Positioner do
   describe 'move' do

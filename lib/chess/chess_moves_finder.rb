@@ -1,4 +1,4 @@
-require 'chess_board'
+require_relative './chess_board'
 
 class ChessMovesFinder
   attr_accessor :chess_piece, :raw_position

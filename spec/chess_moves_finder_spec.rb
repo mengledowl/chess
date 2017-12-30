@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-require_relative '../lib/chess_moves_finder'
-require_relative '../lib/pieces/knight'
-require_relative '../lib/pieces/queen'
-require_relative '../lib/pieces/rook'
+require_relative '../lib/chess/chess_moves_finder'
+require_relative '../lib/chess/pieces/knight'
+require_relative '../lib/chess/pieces/queen'
+require_relative '../lib/chess/pieces/rook'
 
 describe ChessMovesFinder do
   describe 'retrieve_available_moves' do
@@ -76,7 +76,7 @@ describe ChessMovesFinder do
     end
   end
 
-  describe 'position_from' do
+  describe 'position' do
     subject { described_class.new(nil, at: position).position }
 
     context 'when position is a4' do

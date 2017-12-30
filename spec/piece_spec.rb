@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-require_relative '../lib/piece'
+require_relative '../lib/chess/piece'
 
 describe Piece do
   describe 'available_moves on subclass' do
