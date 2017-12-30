@@ -5,25 +5,25 @@ class Queen < Piece
     moves = []
 
     potential_move = positioner.move(up: 1, left: 1)
-    while chess_board_grid.include?(potential_move)
+    while chess_board.position_exists?(potential_move)
       moves << potential_move
       potential_move = Positioner.new(potential_move).move(up: 1, left: 1)
     end
 
     potential_move = positioner.move(down: 1, left: 1)
-    while chess_board_grid.include?(potential_move)
+    while chess_board.position_exists?(potential_move)
       moves << potential_move
       potential_move = Positioner.new(potential_move).move(down: 1, left: 1)
     end
 
     potential_move = positioner.move(up: 1, right: 1)
-    while chess_board_grid.include?(potential_move)
+    while chess_board.position_exists?(potential_move)
       moves << potential_move
       potential_move = Positioner.new(potential_move).move(up: 1, right: 1)
     end
 
     potential_move = positioner.move(down: 1, right: 1)
-    while chess_board_grid.include?(potential_move)
+    while chess_board.position_exists?(potential_move)
       moves << potential_move
       potential_move = Positioner.new(potential_move).move(down: 1, right: 1)
     end

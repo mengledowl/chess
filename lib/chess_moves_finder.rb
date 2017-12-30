@@ -13,7 +13,7 @@ class ChessMovesFinder
   end
 
   def position
-    chess_board.grid.include?(raw_position.chars) ? raw_position.chars : nil
+    chess_board.position_exists?(raw_position.chars) ? raw_position.chars : nil
   end
 
   private

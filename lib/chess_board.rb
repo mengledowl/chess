@@ -17,4 +17,8 @@ class ChessBoard
   def horizontal_row_for(y_position)
     X_AXIS.map { |x| [x, y_position] }
   end
+
+  def position_exists?(position)
+    grid.include?(position)
+  end
 end

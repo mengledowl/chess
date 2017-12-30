@@ -10,7 +10,7 @@ class Piece
 
   def available_moves
     potential_moves
-        .select { |move| chess_board_grid.include?(move) }
+        .select { |move| chess_board.position_exists?(move) }
         .reject { |p| p == position }
         .map(&:join)
   end
@@ -23,10 +23,6 @@ class Piece
 
   def positioner
     @positioner ||= Positioner.new(position)
-  end
-
-  def chess_board_grid
-    @chess_board_grid ||= chess_board.grid
   end
 
   def chess_board
