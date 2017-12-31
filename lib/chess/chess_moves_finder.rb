@@ -7,9 +7,9 @@ class ChessMovesFinder
   attr_accessor :chess_piece, :raw_position
 
   PIECES = {
-      'Knight'  => Knight,
-      'Queen'   => Queen,
-      'Rook'    => Rook
+      knight: Knight,
+      queen:  Queen,
+      rook:   Rook
   }
 
   def initialize(chess_piece, at:)
@@ -34,6 +34,6 @@ class ChessMovesFinder
   end
 
   def get_chess_piece(piece)
-    PIECES[piece.to_s.capitalize] || abort("Error: unknown piece: #{piece}. Try one of the following: #{PIECES.keys.join(', ')}")
+    PIECES[piece.to_s.downcase.to_sym] || abort("Error: unknown piece: #{piece}. Try one of the following: #{PIECES.keys.join(', ')}")
   end
 end

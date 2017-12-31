@@ -7,6 +7,7 @@ class Positioner
 
   def move(**kwargs)
     position = starting_position
+
     kwargs.each_pair do |direction, spaces|
       position = Movement.public_send(direction.to_sym, position, spaces: spaces)
     end
