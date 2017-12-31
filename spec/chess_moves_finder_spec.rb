@@ -78,6 +78,15 @@ describe ChessMovesFinder do
         it { is_expected.to match_array %w(g7 f6 f4 g3) }
       end
     end
+
+    context 'when piece is unknown' do
+      let(:chess_piece) { 'unknown' }
+      let(:position) { nil }
+
+      it 'should abort' do
+         expect { subject }.to raise_error(SystemExit)
+      end
+    end
   end
 
   describe 'position' do

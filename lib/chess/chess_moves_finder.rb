@@ -6,6 +6,12 @@ require_relative 'pieces/rook'
 class ChessMovesFinder
   attr_accessor :chess_piece, :raw_position
 
+  PIECES = {
+      'Knight'  => Knight,
+      'Queen'   => Queen,
+      'Rook'    => Rook
+  }
+
   def initialize(chess_piece, at:)
     @chess_piece = get_chess_piece(chess_piece)
     @raw_position = at
@@ -26,6 +32,6 @@ class ChessMovesFinder
   end
 
   def get_chess_piece(piece)
-    Object.const_get(piece.to_s.capitalize)
+    PIECES[piece.to_s.capitalize] || abort("Error: unknown piece: #{piece}. Try one of the following: #{PIECES.keys.join(', ')}")
   end
 end
