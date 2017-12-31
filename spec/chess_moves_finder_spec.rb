@@ -106,7 +106,9 @@ describe ChessMovesFinder do
     context 'when position is outside of the board area' do
       let(:position) { 'n4' }
 
-      it { should eq nil }
+      it 'should abort' do
+        expect { subject }.to raise_error(SystemExit)
+      end
     end
   end
 end

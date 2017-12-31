@@ -22,7 +22,9 @@ class ChessMovesFinder
   end
 
   def position
-    chess_board.position_exists?(raw_position.chars) ? raw_position.chars : nil
+    return raw_position.chars if chess_board.position_exists?(raw_position.chars)
+
+    abort("Error: position #{raw_position} is outside of the chess board area")
   end
 
   private
